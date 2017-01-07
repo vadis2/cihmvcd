@@ -23,7 +23,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '';
+/* Base url detection CI 3 */
+$offset = explode('index.php', $_SERVER['SCRIPT_NAME']);
+$offset = $offset[0];
+if (!defined('URL_OFFSET')) define('URL_OFFSET', $offset);
+$protocol = 'http';
+if (isset($_SERVER['HTTPS'])) {
+    if ('on' == $_SERVER['HTTPS']) $protocol = 'https';
+}
+$base_url = $protocol.'://'.$_SERVER['SERVER_NAME'].$offset;
+
+$config['base_url']    = $base_url;
+//$config['base_url'] = 'http://cihmvcd.com';
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +46,7 @@ $config['base_url'] = '';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
